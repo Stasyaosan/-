@@ -71,4 +71,43 @@ input[type='text'], input[type='password'] {
     margin-right: 30px;
     border: 3px solid #000;
     border-radius: 50%;
+    font-size: 91px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.modal{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    display: flex;
+}
+
+.bg {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal_content {
+    background-color: #20B2AA;
+    padding: 20px 35px;
+    border-radius: 10%;
+}
+
+.close_p {
+    text-align: right;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.show {
+    display: flex;
 }

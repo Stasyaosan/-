@@ -34,5 +34,47 @@
 <footer class="footer">
     <p align="center">@Water 2024 Все права защишены</p>
 </footer>
+
+<div class="modal hidden">
+    <div class="bg">
+        <div class="modal_content">
+            <p class="close_p">
+                <a class="close_modal">
+                    Х
+                </a>
+            </p>
+            <h2>Добавить воды</h2>
+            <p>
+                <select>
+                    <option>100 мл</option>
+                    <option>200 мл</option>
+                    <option>300 мл</option>
+                    <option>400 мл</option>
+                    <option>500 мл</option>
+                    <option>600 мл</option>
+                    <option>700 мл</option>
+                    <option>800 мл</option>
+                    <option>900 мл</option>
+                    <option>1000 мл</option>
+                </select>
+            </p>
+            <p>
+                <label for="water">Кол-во воды мл</label>
+                <input type="number" id="water" name="water_ml">
+            </p>
+            <p>
+                <button class="btn">Добавить</button>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    $('.water_btn').on('click', function(){
+    $('.modal').removeClass('hidden');
+    $('.modal').addClass('show');
+    });
+</script>
 </body>
 </html>
