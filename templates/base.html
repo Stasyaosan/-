@@ -45,22 +45,22 @@
             </p>
             <h2>Добавить воды</h2>
             <p>
-                <select>
-                    <option>100 мл</option>
-                    <option>200 мл</option>
-                    <option>300 мл</option>
-                    <option>400 мл</option>
-                    <option>500 мл</option>
-                    <option>600 мл</option>
-                    <option>700 мл</option>
-                    <option>800 мл</option>
-                    <option>900 мл</option>
-                    <option>1000 мл</option>
+                <select id="change" class="btn">
+                    <option value="100">100 мл</option>
+                    <option value="200">200 мл</option>
+                    <option value="300">300 мл</option>
+                    <option value="400">400 мл</option>
+                    <option value="500">500 мл</option>
+                    <option value="600">600 мл</option>
+                    <option value="700">700 мл</option>
+                    <option value="800">800 мл</option>
+                    <option value="900">900 мл</option>
+                    <option value="1000">1000 мл</option>
                 </select>
             </p>
             <p>
                 <label for="water">Кол-во воды мл</label>
-                <input type="number" id="water" name="water_ml">
+                <input type="number" class="btn" id="water" name="water_ml">
             </p>
             <p>
                 <button class="btn">Добавить</button>
@@ -72,9 +72,21 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
     $('.water_btn').on('click', function(){
-    $('.modal').removeClass('hidden');
-    $('.modal').addClass('show');
+        $('.modal').removeClass('hidden');
+        $('.modal').addClass('show');
     });
+
+    $('.close_p').on('click', function(){
+        $('.modal').removeClass('show');
+        $('.modal').addClass('hidden');
+    });
+
+    $('#change').on('change', function(){
+        let sel = $(this).val();
+        $('#water').val(sel);
+    });
+
+
 </script>
 </body>
 </html>
