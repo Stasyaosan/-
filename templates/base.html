@@ -59,11 +59,15 @@
                 </select>
             </p>
             <p>
-                <label for="water">Кол-во воды мл</label>
-                <input type="number" class="btn" id="water" name="water_ml">
+                <label for="water_limit">Ваш лимит воды</label>
+                <input type="number" class="btn" id="water_limit" readonly placeholder="Ваш лимит воды" value="{{water_limit}}" name="water_limit">
             </p>
             <p>
-                <button class="btn">Добавить</button>
+                <label for="water">Кол-во воды мл</label>
+                <input type="number" class="btn" id="water" value="100" name="water_ml">
+            </p>
+            <p>
+                <button class="btn add_water_btn">Добавить</button>
             </p>
         </div>
     </div>
@@ -84,6 +88,24 @@
     $('#change').on('change', function(){
         let sel = $(this).val();
         $('#water').val(sel);
+    });
+
+    $('.add_water_btn').on('click', function(){
+        let water = $('#water').val();
+        let limit = $('#water_limit').val();
+
+        $.ajax({
+            url: '/get_count_water',
+            method: 'post',
+            dataType: 'html',
+            data: {},
+            success: function(data){
+                count_water = parseInt(data.replace('"', ''));
+                let res = parseInt(water) + parseInt(count_water);
+                let procent = res / parseInt(limit) * 100;
+                $('.water_rect').css('height', procent+'%');
+            }
+        });
     });
 
 

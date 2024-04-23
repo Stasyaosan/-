@@ -54,5 +54,19 @@ def get_user(login):
 def update_password(password, login):
     conn = psycopg2.connect(database_url)
     cursor = conn.cursor()
-    cursor.execute("update users set password = '"+password+"' where login = '"+login+"'")
+    cursor.execute("update users set password = '" + password + "' where login  = '" + login + "'")
     conn.commit()
+
+
+def get_water_limit(login):
+    conn = psycopg2.connect(database_url)
+    cursor = conn.cursor()
+    cursor.execute("select * from users where login = '" + login + "'")
+    return cursor.fetchone()[3]
+
+
+def get_water_count(login):
+    conn = psycopg2.connect(database_url)
+    cursor = conn.cursor()
+    cursor.execute("select * from users where login = '" + login + "'")
+    return cursor.fetchone()[4]

@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from passlib.context import CryptContext
 
@@ -19,8 +19,20 @@ pwd_context = CryptContext(schemes=['bcrypt'], deprecated="auto")
 
 @app.get('/', response_class=HTMLResponse)
 def index(request: Request):
-    # print(request.session['login'])
-    return templates.TemplateResponse('index.html', {'request': request})
+    water_limit = 0
+    if 'login' in request.session:
+        water_limit = get_water_limit(request.session['login'])
+
+    return templates.TemplateResponse('index.html', {'request': request, 'water_limit': water_limit})
+
+
+@app.post('/get_count_water', response_class=HTMLResponse)
+def get_count_water(request: Request):
+    count_water = 0
+    if 'login' in request.session:
+        count_water = get_water_count(request.session['login'])
+
+    return JSONResponse(str(count_water))
 
 
 @app.get('/reg', response_class=HTMLResponse)
@@ -70,7 +82,6 @@ def logout(request: Request):
 
 @app.get('/panel', response_class=HTMLResponse)
 def panel(request: Request):
-
     return templates.TemplateResponse('user/panel.html', {'request': request})
 
 
