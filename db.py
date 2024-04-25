@@ -70,3 +70,17 @@ def get_water_count(login):
     cursor = conn.cursor()
     cursor.execute("select * from users where login = '" + login + "'")
     return cursor.fetchone()[4]
+
+
+def set_water_count(login, count_water):
+    conn = psycopg2.connect(database_url)
+    cursor = conn.cursor()
+    cursor.execute("update users set count_water = " + count_water + " where login = '" + login + "'")
+    conn.commit()
+
+
+def get_all_water(login):
+    conn = psycopg2.connect(database_url)
+    cursor = conn.cursor()
+    cursor.execute("select * from users where login = '" + login + "'")
+    return cursor.fetchone()

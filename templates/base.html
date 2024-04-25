@@ -104,11 +104,37 @@
                 let res = parseInt(water) + parseInt(count_water);
                 let procent = res / parseInt(limit) * 100;
                 $('.water_rect').css('height', procent+'%');
+
+                $.ajax({
+                url: '/set_count_water',
+                method: 'post',
+                dataType: 'html',
+                data: {'count_water': res},
+                success: function(data_1){
+
+                }
+                });
             }
         });
+        $('.modal').removeClass('show');
+        $('.modal').addClass('hidden');
     });
 
-
+    $(document).ready(function(){
+         $.ajax({
+            url: '/get_water_all',
+            method: 'post',
+            dataType: 'html',
+            data: {},
+            success: function(data){
+                let d = JSON.parse(data);
+                console.log(d);
+                let procent = (d['count_water'] / d['water_limit']) * 100;
+                $('.water_rect').css('height', procent + '%');
+                $('.res').html('<p><b>'+d['count_water']+'</b></p>');
+            }
+         });
+    });
 </script>
 </body>
 </html>

@@ -35,6 +35,22 @@ def get_count_water(request: Request):
     return JSONResponse(str(count_water))
 
 
+@app.post('/get_water_all', response_class=HTMLResponse)
+def get_water_all(request: Request):
+    if 'login' in request.session:
+        all_water = get_all_water(request.session['login'])
+        a = {'water_limit': all_water[3], 'count_water': all_water[4]}
+    return JSONResponse(a)
+
+
+@app.post('/set_count_water', response_class=HTMLResponse)
+def set_count_water(request: Request, count_water: str = Form(...)):
+    if 'login' in request.session:
+        set_water_count(request.session['login'], count_water)
+
+    return JSONResponse(1)
+
+
 @app.get('/reg', response_class=HTMLResponse)
 def reg(request: Request):
     return templates.TemplateResponse('user/reg.html', {'request': request})
