@@ -4,7 +4,6 @@ from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from passlib.context import CryptContext
 
-import db
 from db import *
 from starlette.middleware.sessions import SessionMiddleware
 
@@ -62,7 +61,7 @@ def register(request: Request, login: str = Form(...), password: str = Form(...)
     message = ''
     if password == password_rep:
         if not check_login(login):
-            reg(login, p)
+            registration(login, p)
             message += 'Вы успешно зарегистрированы'
         else:
             message += 'Такой логин существует'
@@ -77,7 +76,7 @@ def auth(request: Request):
 
 
 @app.post('/auth', response_class=HTMLResponse)
-async def auth(request: Request, login: str = Form(...), password: str = Form(...)):
+async def authstretion(request: Request, login: str = Form(...), password: str = Form(...)):
     # print(login)
     user = get_user(login)
     if not user or not pwd_context.verify(password, user[2]):

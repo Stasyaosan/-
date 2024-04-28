@@ -1,12 +1,21 @@
-import psycopg2
+# import m
+import mysql.connector as m
 
-database_url = "postgresql://postgres:Av4936754@localhost/postgres"
+# database_url = "postgresql://postgres:Av4936754@localhost/postgres"
+
+database_url = {
+    'user': 'root',
+    'password': 'Av4936754',
+    'host': "localhost",
+    'database': 'water',
+    'port': 3306,
+}
 
 
 def execute_query(query, select=False):
     conn = None
     try:
-        conn = psycopg2.connect(database_url)
+        conn = m.connect(**database_url)
         cursor = conn.cursor()
         cursor.execute(query)
         if select:
@@ -24,8 +33,12 @@ def execute_query(query, select=False):
             conn.close()
 
 
-def reg(login, password):
-    execute_query(f"insert into users (login, password) values ('{login}', '{password}')")
+def registration(login, password):
+    # execute_query(f"insert into users (login, password) values ('{login}','{password}')")
+    conn = m.connect(**database_url)
+    cursor = conn.cursor()
+    cursor.execute(f"insert into users (login, password) values ('{login}','{password}')")
+    conn.commit()
 
 
 def auth(login, password):
@@ -36,7 +49,7 @@ def auth(login, password):
 
 
 def check_login(login):
-    conn = psycopg2.connect(database_url)
+    conn = m.connect(**database_url)
     cursor = conn.cursor()
     cursor.execute("select * from users where login = '" + login + "'")
     if cursor.fetchone():
@@ -45,42 +58,42 @@ def check_login(login):
 
 
 def get_user(login):
-    conn = psycopg2.connect(database_url)
+    conn = m.connect(**database_url)
     cursor = conn.cursor()
     cursor.execute("select * from users where login = '" + login + "'")
     return cursor.fetchone()
 
 
 def update_password(password, login):
-    conn = psycopg2.connect(database_url)
+    conn = m.connect(**database_url)
     cursor = conn.cursor()
     cursor.execute("update users set password = '" + password + "' where login  = '" + login + "'")
     conn.commit()
 
 
 def get_water_limit(login):
-    conn = psycopg2.connect(database_url)
+    conn = m.connect(**database_url)
     cursor = conn.cursor()
     cursor.execute("select * from users where login = '" + login + "'")
     return cursor.fetchone()[3]
 
 
 def get_water_count(login):
-    conn = psycopg2.connect(database_url)
+    conn = m.connect(**database_url)
     cursor = conn.cursor()
     cursor.execute("select * from users where login = '" + login + "'")
     return cursor.fetchone()[4]
 
 
 def set_water_count(login, count_water):
-    conn = psycopg2.connect(database_url)
+    conn = m.connect(**database_url)
     cursor = conn.cursor()
     cursor.execute("update users set count_water = " + count_water + " where login = '" + login + "'")
     conn.commit()
 
 
 def get_all_water(login):
-    conn = psycopg2.connect(database_url)
+    conn = m.connect(**database_url)
     cursor = conn.cursor()
     cursor.execute("select * from users where login = '" + login + "'")
     return cursor.fetchone()
